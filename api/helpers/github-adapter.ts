@@ -1,9 +1,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-require('dotenv').config({
-  path: '../../config/.env',
-});
+require('dotenv').config();
 
 interface GitHubUser {
   id: number;
