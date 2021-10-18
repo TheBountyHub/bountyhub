@@ -3,6 +3,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import {getGitHubUser} from './helpers/github-adapter';
+import {buildTokens, setTokens} from './utilities/token-utils';
+import {createUser, getUserByGitHubId} from './db/user-service';
 
 const app = express();
 
@@ -23,6 +25,11 @@ app.get('/github', async (req, res) => {
   const gitHubUser = await getGitHubUser(code as string);
   let user = await getUserByGitHubId(gitHubUser.id);
   if (!user) user = await createUser(gitHubUser.name, gitHubUser.id);
+
+  const {accessToken, refreshToken} = buildTokens(user);
+  setTokens(res, accessToken, refreshToken);
+
+  res.redirect(`${process.env.CLIENT_URL}/me`)
 });
 app.get('/hackerone', async (req, res) => {});
 app.get('/bugcrowd', async (req, res) => {});
