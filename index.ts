@@ -1,1 +1,1 @@
-console.log("Hello World, This is 🕷️ BugHub");
+console.log('Hello World, This is 🕷️ BugHub');
