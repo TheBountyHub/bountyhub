@@ -1,7 +1,4 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-require('dotenv').config();
 
 interface GitHubUser {
   id: number;
@@ -39,4 +36,12 @@ async function getAccessToken(code: string) {
   );
 
   return response.data.access_token;
+}
+
+async function getUser(token: string) {
+  const response = await axios.get<UserResponse>(USER_URL, {
+    headers: {Authorization: `Bearer ${token}`},
+  });
+
+  return response.data as GitHubUser;
 }
