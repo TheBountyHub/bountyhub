@@ -15,7 +15,11 @@ app.use(cookieParser());
 // Kubernetes health checking
 app.get('/', (req, res) => res.send('API is healthy'));
 
-app.get('/github', async (req, res) => {});
+app.get('/github', async (req, res) => {
+  const {code} = req.query;
+
+  const gitHubUser = await getGitHubUser(code as string);
+});
 app.get('/hackerone', async (req, res) => {});
 app.get('/bugcrowd', async (req, res) => {});
 app.post('/refresh', async (req, res) => {});
